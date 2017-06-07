@@ -7,12 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.main.testpatternapplication.imageloader.DiskCache;
+import com.main.testpatternapplication.imageloader.DoubleCache;
 import com.main.testpatternapplication.imageloader.ImageLoader;
+import com.main.testpatternapplication.imageloader.MemoryCache;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button btn1;
+    private Button btn2;
+    private Button btn3;
     private ImageView img;
-    private Button btnLoad;
 
     private ImageLoader imageLoader;
 
@@ -22,14 +27,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         img = (ImageView) findViewById(R.id.img);
-        btnLoad = (Button) findViewById(R.id.btn_load);
+        btn1 = (Button) findViewById(R.id.btn_1);
+        btn2 = (Button) findViewById(R.id.btn_2);
+        btn3 = (Button) findViewById(R.id.btn_3);
 
         imageLoader = new ImageLoader();
 
-        btnLoad.setOnClickListener(new View.OnClickListener() {
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageLoader.setCache(new MemoryCache());
                 Bitmap bitmap = imageLoader.loadImage("http://img08.oneniceapp.com/upload/show/2017/06/06/3105a10448e1e3e3d3eb38e366a76886.jpg");
+                img.setImageBitmap(bitmap);
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageLoader.setCache(new DiskCache(MainActivity.this));
+                Bitmap bitmap = imageLoader.loadImage("http://img08.oneniceapp.com/upload/show/2017/06/06/7246ca4978e3435a47f6895d114de505.jpg");
+                img.setImageBitmap(bitmap);
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageLoader.setCache(new DoubleCache(MainActivity.this));
+                Bitmap bitmap = imageLoader.loadImage("http://img08.oneniceapp.com/upload/show/2017/05/16/220e7e58890b55e8d5ef59287359e9b0.jpg");
                 img.setImageBitmap(bitmap);
             }
         });
