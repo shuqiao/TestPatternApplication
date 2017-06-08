@@ -26,6 +26,9 @@ public class ImageLoader {
         return bitmap;
     }
 
+    /**
+     * 依赖注入
+     */
     public void setCache(ImageCache cache) {
         this.cache = cache;
     }

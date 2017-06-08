@@ -48,13 +48,7 @@ public class DiskCache implements ImageCache {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            CloseUtil.close(out);
         }
     }
 
