@@ -3,6 +3,7 @@ package com.main.testpatternapplication;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,8 +13,10 @@ import com.main.testpatternapplication.imageloader.DoubleCache;
 import com.main.testpatternapplication.imageloader.ImageCache;
 import com.main.testpatternapplication.imageloader.ImageLoader;
 import com.main.testpatternapplication.imageloader.MemoryCache;
+import com.main.testpatternapplication.original.Document;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
 
     private Button btn1;
     private Button btn2;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //--------------imageloader
         img = (ImageView) findViewById(R.id.img);
         btn1 = (Button) findViewById(R.id.btn_1);
         btn2 = (Button) findViewById(R.id.btn_2);
@@ -62,5 +66,35 @@ public class MainActivity extends AppCompatActivity {
                 img.setImageBitmap(bitmap);
             }
         });
+
+        //--------------original
+        testCopy();
+
+    }
+
+    /**
+     * 测试原型模式：clone or 深拷贝 or 浅拷贝
+     */
+    private void testCopy() {
+        Document ori = new Document();
+        ori.setText("ori");
+        ori.setImg("ori img-1");
+        ori.setImg("ori img-2");
+        ori.setImg("ori img-3");
+
+        Document clone = ori.clone();
+
+        Log.e(TAG, "ori  \n" + ori.toString());
+        Log.e(TAG, "clone  \n" + clone.toString());
+
+        ori.setText("new ori");
+
+        Log.e(TAG, "change ori text , ori  \n" + ori.toString());
+        Log.e(TAG, "change ori text , clone  \n" + clone.toString());
+
+        clone.setImg("clone img-1");
+
+        Log.e(TAG, "change clone img , ori  \n" + ori.toString());
+        Log.e(TAG, "change clone img , clone  \n" + clone.toString());
     }
 }

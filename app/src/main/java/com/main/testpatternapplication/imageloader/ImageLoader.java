@@ -3,6 +3,7 @@ package com.main.testpatternapplication.imageloader;
 import android.graphics.Bitmap;
 
 /**
+ * Builder模式
  * 单一职责原则
  * <p>
  * Created by shuqiao on 2017/6/6.
