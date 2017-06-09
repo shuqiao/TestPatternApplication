@@ -20,12 +20,12 @@ public class ImageDownload {
 
     private ExecutorService executor;
 
-    public ImageDownload() {
-        init();
+    public ImageDownload(int threadCount) {
+        init(threadCount);
     }
 
-    private void init() {
-        executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private void init(int threadCount) {
+        executor = Executors.newFixedThreadPool(threadCount);
     }
 
     public Bitmap downloadImage(String imageUrl) {
@@ -66,7 +66,7 @@ public class ImageDownload {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
             return bitmap;
         }
     }

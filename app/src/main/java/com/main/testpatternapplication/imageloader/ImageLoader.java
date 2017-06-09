@@ -10,8 +10,18 @@ import android.graphics.Bitmap;
 
 public class ImageLoader {
 
+    private Bitmap errorBitmap;
+
     private ImageCache cache = new MemoryCache();
-    private ImageDownload download = new ImageDownload();
+    private ImageDownload download = new ImageDownload(Runtime.getRuntime().availableProcessors());
+
+    public ImageLoader(Builder builder) {
+        if (builder != null) {
+            cache = builder.cache;
+            download = new ImageDownload(builder.downloadThreadCount);
+            errorBitmap = builder.errorBitmap;
+        }
+    }
 
     public Bitmap loadImage(String url) {
         Bitmap bitmap = cache.get(url);
@@ -23,13 +33,43 @@ public class ImageLoader {
             }
         }
 
-        return bitmap;
+        if (bitmap != null) {
+            return bitmap;
+        } else {
+            return errorBitmap;
+        }
+    }
+//
+//    /**
+//     * 依赖注入
+//     */
+//    public void setCache(ImageCache cache) {
+//        this.cache = cache;
+//    }
+
+    public static class Builder {
+        private ImageCache cache = new MemoryCache();
+        private Bitmap errorBitmap = null;
+        private int downloadThreadCount = Runtime.getRuntime().availableProcessors();
+
+        public Builder cache(ImageCache cache) {
+            this.cache = cache;
+            return this;
+        }
+
+        public Builder errorBitmap(Bitmap errorBitmap) {
+            this.errorBitmap = errorBitmap;
+            return this;
+        }
+
+        public Builder downloadThreadCount(int downloadThreadCount) {
+            this.downloadThreadCount = downloadThreadCount;
+            return this;
+        }
+
+        public ImageLoader build() {
+            return new ImageLoader(this);
+        }
     }
 
-    /**
-     * 依赖注入
-     */
-    public void setCache(ImageCache cache) {
-        this.cache = cache;
-    }
 }
