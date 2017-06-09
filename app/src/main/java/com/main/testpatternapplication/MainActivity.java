@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.main.testpatternapplication.factory.AnimalFactory;
+import com.main.testpatternapplication.factory.AnimalFactoryImpl;
+import com.main.testpatternapplication.factory.Cat;
+import com.main.testpatternapplication.factory.Dog;
+import com.main.testpatternapplication.factory.Fox;
 import com.main.testpatternapplication.imageloader.DiskCache;
 import com.main.testpatternapplication.imageloader.DoubleCache;
 import com.main.testpatternapplication.imageloader.ImageCache;
@@ -70,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         //--------------original
         testCopy();
 
+        //--------------factory
+        testFactory();
+
     }
 
     /**
@@ -96,5 +104,15 @@ public class MainActivity extends AppCompatActivity {
 
         Log.e(TAG, "change clone img , ori  \n" + ori.toString());
         Log.e(TAG, "change clone img , clone  \n" + clone.toString());
+    }
+
+    private void testFactory() {
+        AnimalFactory animalFactory = new AnimalFactoryImpl();
+
+        animalFactory.createAnimal(Cat.class).talk();
+
+        animalFactory.createAnimal(Dog.class).talk();
+
+        animalFactory.createAnimal(Fox.class).talk();
     }
 }
