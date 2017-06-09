@@ -19,6 +19,8 @@ import com.main.testpatternapplication.imageloader.ImageCache;
 import com.main.testpatternapplication.imageloader.ImageLoader;
 import com.main.testpatternapplication.imageloader.MemoryCache;
 import com.main.testpatternapplication.original.Document;
+import com.main.testpatternapplication.state.TV;
+import com.main.testpatternapplication.state.TvState;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         //--------------factory
         testFactory();
 
+        //--------------state
+        testState();
+
     }
 
     /**
@@ -114,5 +119,17 @@ public class MainActivity extends AppCompatActivity {
         animalFactory.createAnimal(Dog.class).talk();
 
         animalFactory.createAnimal(Fox.class).talk();
+    }
+
+    private void testState() {
+        TV tv = new TV();
+        Log.e(TvState.TAG, "not on");
+        tv.next();
+        tv.on();
+        Log.e(TvState.TAG, "on");
+        tv.down();
+        tv.off();
+        Log.e(TvState.TAG, "off");
+        tv.pre();
     }
 }
