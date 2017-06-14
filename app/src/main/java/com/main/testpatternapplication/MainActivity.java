@@ -18,6 +18,8 @@ import com.main.testpatternapplication.factory.AnimalFactoryImpl;
 import com.main.testpatternapplication.factory.Cat;
 import com.main.testpatternapplication.factory.Dog;
 import com.main.testpatternapplication.factory.Fox;
+import com.main.testpatternapplication.flyweight.Ticket;
+import com.main.testpatternapplication.flyweight.TicketFactory;
 import com.main.testpatternapplication.imageloader.DiskCache;
 import com.main.testpatternapplication.imageloader.DoubleCache;
 import com.main.testpatternapplication.imageloader.ImageCache;
@@ -78,7 +80,21 @@ public class MainActivity extends AppCompatActivity {
         //testMediator();
 
         //--------------mediator
-        testProxy();
+        //testProxy();
+
+        //--------------mediator
+        testFlyweight();
+    }
+
+    private void testFlyweight() {
+        Ticket ticket1 = TicketFactory.getTicket("北京", "济南");
+        ticket1.logInfo(1);
+
+        Ticket ticket2 = TicketFactory.getTicket("北京", "济南");
+        ticket2.logInfo(2);
+
+        Ticket ticket3 = TicketFactory.getTicket("北京", "济南");
+        ticket3.logInfo(3);
     }
 
     private void testProxy() {
@@ -255,5 +271,11 @@ public class MainActivity extends AppCompatActivity {
         tv.off();
         Log.e(TvState.TAG, "off");
         tv.pre();
+    }
+
+    @Override
+    public void finish() {
+        TicketFactory.clear();
+        super.finish();
     }
 }
