@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.main.testpatternapplication.bridge.Coffee;
+import com.main.testpatternapplication.bridge.LargeCoffee;
+import com.main.testpatternapplication.bridge.Milk;
+import com.main.testpatternapplication.bridge.SmallCoffee;
+import com.main.testpatternapplication.bridge.Sugar;
 import com.main.testpatternapplication.factory.AnimalFactory;
 import com.main.testpatternapplication.factory.AnimalFactoryImpl;
 import com.main.testpatternapplication.factory.Cat;
@@ -79,11 +84,22 @@ public class MainActivity extends AppCompatActivity {
         //--------------mediator
         //testMediator();
 
-        //--------------mediator
+        //--------------proxy
         //testProxy();
 
-        //--------------mediator
-        testFlyweight();
+        //--------------flyweight
+        //testFlyweight();
+
+        //--------------bridge
+        testBridge();
+    }
+
+    private void testBridge() {
+        Coffee large = new LargeCoffee(new Sugar());
+        large.make();
+
+        Coffee small = new SmallCoffee(new Milk());
+        small.make();
     }
 
     private void testFlyweight() {
