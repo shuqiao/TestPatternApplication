@@ -18,6 +18,8 @@ import com.main.testpatternapplication.imageloader.DoubleCache;
 import com.main.testpatternapplication.imageloader.ImageCache;
 import com.main.testpatternapplication.imageloader.ImageLoader;
 import com.main.testpatternapplication.imageloader.MemoryCache;
+import com.main.testpatternapplication.memento.NoteCaretaker;
+import com.main.testpatternapplication.memento.NoteEditText;
 import com.main.testpatternapplication.original.Document;
 import com.main.testpatternapplication.state.TV;
 import com.main.testpatternapplication.state.TvState;
@@ -29,8 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private Button btn2;
     private Button btn3;
     private ImageView img;
-
     private ImageLoader imageLoader;
+
+    private NoteEditText etNote;
+    private Button btnCancel;
+    private Button btnSave;
+    private Button btnRestore;
+    private NoteCaretaker noteCaretaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,53 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //--------------imageloader
+        //testImageLoader();
+
+        //--------------original
+        //testCopy();
+
+        //--------------factory
+        //testFactory();
+
+        //--------------state
+        //testState();
+
+        //--------------memento
+        testMemento();
+
+    }
+
+    private void testMemento() {
+        noteCaretaker = new NoteCaretaker(5);
+
+        etNote = (NoteEditText) findViewById(R.id.et_note);
+        btnCancel = (Button) findViewById(R.id.btn_cancel);
+        btnSave = (Button) findViewById(R.id.btn_save);
+        btnRestore = (Button) findViewById(R.id.btn_restore);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etNote.restoreMemento(noteCaretaker.pre());
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                noteCaretaker.save(etNote.getSaveMemento());
+            }
+        });
+
+        btnRestore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etNote.restoreMemento(noteCaretaker.next());
+            }
+        });
+    }
+
+    private void testImageLoader() {
         img = (ImageView) findViewById(R.id.img);
         btn1 = (Button) findViewById(R.id.btn_1);
         btn2 = (Button) findViewById(R.id.btn_2);
@@ -73,16 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 img.setImageBitmap(bitmap);
             }
         });
-
-        //--------------original
-        testCopy();
-
-        //--------------factory
-        testFactory();
-
-        //--------------state
-        testState();
-
     }
 
     /**
