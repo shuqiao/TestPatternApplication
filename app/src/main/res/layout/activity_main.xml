@@ -54,14 +54,16 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:hint="输入文字"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="取消" />
+        android:text="取消"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_save"
@@ -69,7 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="保存" />
+        android:text="保存"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_restore"
@@ -77,6 +80,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="恢复" />
+        android:text="恢复"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入用户名" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_name"
+        android:layout_marginTop="10dp"
+        android:hint="输入密码" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="登录" />
 
 </RelativeLayout>

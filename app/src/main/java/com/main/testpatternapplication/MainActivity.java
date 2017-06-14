@@ -3,10 +3,15 @@ package com.main.testpatternapplication;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.main.testpatternapplication.factory.AnimalFactory;
 import com.main.testpatternapplication.factory.AnimalFactoryImpl;
@@ -39,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnRestore;
     private NoteCaretaker noteCaretaker;
 
+    private EditText etName;
+    private EditText etPassword;
+    private Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +66,52 @@ public class MainActivity extends AppCompatActivity {
         //testState();
 
         //--------------memento
-        testMemento();
+        //testMemento();
 
+        //--------------mediator
+        testMediator();
+    }
+
+    private void testMediator() {
+        etName = (EditText) findViewById(R.id.et_name);
+        etPassword = (EditText) findViewById(R.id.et_password);
+        btnLogin = (Button) findViewById(R.id.btn_login);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+        setClickable(false);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String name = etName.getText().toString();
+                String password = etPassword.getText().toString();
+
+                setClickable(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password));
+            }
+        };
+
+        etName.addTextChangedListener(textWatcher);
+        etPassword.addTextChangedListener(textWatcher);
+    }
+
+    private void setClickable(boolean clickable) {
+        btnLogin.setClickable(clickable);
+        btnLogin.setTextColor(getResources().getColor(clickable ? R.color.normal_text_color : R.color.light_text_color));
     }
 
     private void testMemento() {
