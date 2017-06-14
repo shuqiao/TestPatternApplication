@@ -26,8 +26,14 @@ import com.main.testpatternapplication.imageloader.MemoryCache;
 import com.main.testpatternapplication.memento.NoteCaretaker;
 import com.main.testpatternapplication.memento.NoteEditText;
 import com.main.testpatternapplication.original.Document;
+import com.main.testpatternapplication.proxy.DynamicProxy;
+import com.main.testpatternapplication.proxy.ILawsuit;
+import com.main.testpatternapplication.proxy.LawyerA;
+import com.main.testpatternapplication.proxy.PersonA;
 import com.main.testpatternapplication.state.TV;
 import com.main.testpatternapplication.state.TvState;
+
+import java.lang.reflect.Proxy;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
@@ -69,7 +75,28 @@ public class MainActivity extends AppCompatActivity {
         //testMemento();
 
         //--------------mediator
-        testMediator();
+        //testMediator();
+
+        //--------------mediator
+        testProxy();
+    }
+
+    private void testProxy() {
+
+        PersonA personA = new PersonA();
+        LawyerA lawyerA = new LawyerA(personA);
+        lawyerA.submit();
+        lawyerA.burden();
+        lawyerA.defend();
+        lawyerA.finish();
+
+        DynamicProxy dynamicProxy = new DynamicProxy(personA);
+        ClassLoader loader = personA.getClass().getClassLoader();
+        ILawsuit dynamicLawsuit = (ILawsuit) Proxy.newProxyInstance(loader, new Class[]{ILawsuit.class}, dynamicProxy);
+        dynamicLawsuit.submit();
+        dynamicLawsuit.burden();
+        dynamicLawsuit.defend();
+        dynamicLawsuit.finish();
     }
 
     private void testMediator() {
